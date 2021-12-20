@@ -1,13 +1,25 @@
 package com.cabInvoice;
+import org.junit.Before;
 import org.junit.Test;
+import java.util.HashMap;
 
 import com.cabInvoice.entity.Invoice;
 import com.cabInvoice.entity.Ride;
+import com.cabInvoice.entity.RideRepository;
 import static org.junit.Assert.assertEquals;
 
 public class CanInvoiceGeneratorTest {
 	
-	CabInvoiceGenerator invoiceGenerator = new CabInvoiceGenerator();
+	CabInvoiceGenerator invoiceGenerator;
+	RideRepository rideRepository = new RideRepository();
+	HashMap<Integer, Ride[]> rideRepos;
+	
+	@Before
+	public void initialization() {
+		invoiceGenerator = new CabInvoiceGenerator();
+		rideRepos = rideRepository.getRideRepos();
+	}
+	
 	
 	@Test
 	public void testCalculateFare() {
@@ -33,5 +45,22 @@ public class CanInvoiceGeneratorTest {
 		Invoice totalFare = invoiceGenerator.getFare(rides);
 		assertEquals(invoice,totalFare);		
 		}
+	
+	@Test
+	public void testInvoiceService() {
+
+		Ride[] rides1 = { new Ride(10, 40), new Ride(20, 50) };
+		Ride[] rides2 = { new Ride(5, 3), new Ride(40, 60), new Ride(60, 80) };
+		Ride[] rides3 = { new Ride(30, 60), new Ride(70, 90) };
+
+		rideRepos.put(1, rides1);
+		rideRepos.put(2, rides2);
+		rideRepos.put(3, rides3);
+
+		Invoice invoice = new Invoice(2, 390, 195);
+
+		assertEquals(invoice, invoiceGenerator.getFare(1, rideRepos));
+	}
+	
 	}
 	

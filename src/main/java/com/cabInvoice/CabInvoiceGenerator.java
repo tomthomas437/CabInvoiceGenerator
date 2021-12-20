@@ -1,5 +1,7 @@
 package com.cabInvoice;
 import org.junit.Test;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.cabInvoice.entity.Invoice;
 import com.cabInvoice.entity.Ride;
@@ -28,4 +30,13 @@ public class CabInvoiceGenerator {
 		} return new Invoice(rides.length, totalFare, totalFare / rides.length);
 	}
 
+	public Invoice getFare(int i, HashMap<Integer, Ride[]> rideRepos) {
+
+		for (Map.Entry<Integer, Ride[]> rideEntry : rideRepos.entrySet()) {
+			if (rideEntry.getKey() == i)
+				return getFare(rideEntry.getValue());
+		}
+
+		return null;
+	}
 }
