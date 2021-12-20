@@ -1,5 +1,7 @@
 package com.cabInvoice;
 import org.junit.Test;
+
+import com.cabInvoice.entity.Invoice;
 import com.cabInvoice.entity.Ride;
 
 public class CabInvoiceGenerator {
@@ -16,14 +18,14 @@ public class CabInvoiceGenerator {
 		return fare;
 	}
 
-	public int getFare(Ride[] rides) {
+	public Invoice getFare(Ride[] rides) {
 		int totalFare = 0;
 		for(int i = 0;i< rides.length; i++) {
 			Ride ride = rides[i];
 			int fare = ride.getDistance() * CostPerKM + ride.getTime() * CostPerMin;
  
 			totalFare += fare;			
-		} return totalFare;
+		} return new Invoice(rides.length, totalFare, totalFare / rides.length);
 	}
 
 }

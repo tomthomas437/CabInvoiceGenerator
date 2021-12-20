@@ -1,6 +1,7 @@
 package com.cabInvoice;
 import org.junit.Test;
 
+import com.cabInvoice.entity.Invoice;
 import com.cabInvoice.entity.Ride;
 import static org.junit.Assert.assertEquals;
 
@@ -24,12 +25,13 @@ public class CanInvoiceGeneratorTest {
 	}
 	
 	@Test
-	public void testMultipleRides() {
+	public void testEnhancedInvoice() {
 		
 		Ride[] rides = {new Ride(10, 40), new Ride(20, 50)};
 		// 140 + 250 = 390
-		int totalFare = invoiceGenerator.getFare(rides);
-		assertEquals(390,totalFare);		
+		Invoice invoice = new Invoice(2,390,195);
+		Invoice totalFare = invoiceGenerator.getFare(rides);
+		assertEquals(invoice,totalFare);		
 		}
 	}
 	
